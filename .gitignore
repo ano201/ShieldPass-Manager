@@ -13,4 +13,4 @@ shieldPass
 *.sublime-workspace
 
 # Data files (encrypted vault)
-data/passwords.dat
+data/
