@@ -1,6 +1,16 @@
 #include <iostream>
 #include "PasswordEntryManager.h"
+#include <cstdlib>
 using namespace std;
+
+void clearScreen()
+{
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
 
 void showMenu()
 {
@@ -20,7 +30,8 @@ void showMenu()
 
 int main()
 {
-    cout << "In the name of Allah\n\n";
+    // cout << "In the name of Allah\n\n";
+    clearScreen();
 
     PasswordEntryManager manager;
     int choice = 0;
@@ -28,7 +39,7 @@ int main()
     while (true)
     {
         showMenu();
-        cout << "Enter your choice: ";
+        cout << "Enter your choice(1-8): ";
         cin >> choice;
 
         if (cin.fail())
@@ -42,24 +53,31 @@ int main()
         switch (choice)
         {
         case 1:
+            clearScreen();
             manager.addNewEntry();
             break;
         case 2:
+            clearScreen();
             manager.viewAllEntries();
             break;
         case 3:
+            clearScreen();
             manager.searchPassword();
             break;
         case 4:
+            clearScreen();
             manager.deletePassword();
             break;
         case 5:
+            clearScreen();
             manager.updatePassword();
             break;
         case 8:
+            clearScreen();
             cout << "Program exited successfully.\n";
             return 0;
         default:
+            clearScreen();
             cout << "Invalid choice. Please try again.\n";
             break;
         }

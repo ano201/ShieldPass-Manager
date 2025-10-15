@@ -1,14 +1,14 @@
-# ShieldPass-Manager
+# ShieldPass Manager
 
-A simple C++ CLI password manager project built to practice **OOP**, **File I/O**, and prepare for **future encryption** features.
+A simple C++ command-line Password Vault to securely store, view, update, search, and delete website credentials.
 
-## 🔍 Current Progress (Development Status)
+---
 
-- ✅ Basic Project Structure
-- ✅ Menu System (Add, View, Search)
-- ✅ Plain Text Storage (`data/vault.txt`)
-- 🛠 In Development: Delete / Update Options
-- 🔒 Planned: Master Password & Encryption
+## 📁 Project Overview
+
+This application manages saved credentials (Name, Website, Password) using a plain text vault file. The system supports password confirmation on add/update, keeps old values when input is blank during update, and clears the screen before each menu for a clean user interface. Future plans include encryption and a master-password system.
+
+---
 
 ## 🗂 Project Structure
 
@@ -28,33 +28,44 @@ shieldPass/
 └── shieldPass (executable)
 ```
 
+---
+
 ## 🚀 Build & Run
 
 ```bash
-g++ src/main.cpp src/PasswordEntryManager.cpp -I include -o shieldPass
-./shieldPass
+g++ -c src/main.cpp -Iinclude -o build/main.o
+ g++ -c src/PasswordEntryManager.cpp -Iinclude -o build/PasswordEntryManager.o
+ g++ build/main.o build/PasswordEntryManager.o -o shieldPass
+ ./shieldPass
 ```
 
-## ✨ Features (So Far)
+---
 
-- Add new password entry
-- View all saved entries
-- Search password by name or website
+## ✅ Current Features
 
-## 🧭 Roadmap
+- Add new entry (with password confirmation)
+- View all entries (auto-load latest data)
+- Search entry by name or website
+- Update existing entry (blank input = keep old value)
+- Delete entry
+- Clear screen before each menu for clean UI
 
-| Stage   | Feature                          | Status         |
-| ------- | -------------------------------- | -------------- |
-| Phase 1 | Basic CLI (Add, View, Search)    | ✅ Done        |
-| Phase 2 | Delete / Update Entry            | 🔄 In Progress |
-| Phase 3 | Master Password System           | ⏳ Planned     |
-| Phase 4 | Encryption (AES-GCM / XChaCha20) | ⏳ Planned     |
-| Phase 5 | Backup & Import                  | ⏳ Planned     |
+---
+
+## 🔮 Future Enhancements
+
+- Master Password Prompt
+- Encrypt vault using AES-GCM / XChaCha20
+- Export / Import backup
+
+---
 
 ## 🎯 Purpose
 
-This project is for **learning**, **resume building**, and understanding **secure software design** using C++.
+This project is for learning, practicing secure software design using C++, and building a resume-ready project.
+
+---
 
 ## 🤝 Contribution (Future)
 
-More features like encryption will be added step by step. This project is being developed from scratch without external libraries to strengthen core logic.
+More features like encryption will be added step by step. This project is developed from scratch without external libraries to strengthen core logic.

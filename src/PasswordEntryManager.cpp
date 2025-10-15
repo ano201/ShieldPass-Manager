@@ -57,6 +57,9 @@ void PasswordEntryManager::loadFromFile()
 
 void PasswordEntryManager::addNewEntry()
 {
+    cout << "====================\n";
+    cout << "  Add new Password  \n";
+    cout << "====================\n";
     loadFromFile();
     PasswordEntry e;
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -87,6 +90,9 @@ void PasswordEntryManager::addNewEntry()
 
 void PasswordEntryManager::viewAllEntries()
 {
+    cout << "======================\n";
+    cout << "  View All Passwords  \n";
+    cout << "======================\n";
     loadFromFile();
     if (entries.empty())
     {
@@ -106,6 +112,9 @@ void PasswordEntryManager::viewAllEntries()
 
 void PasswordEntryManager::searchPassword()
 {
+    cout << "===================================\n";
+    cout << "  Search Password By Name/Website  \n";
+    cout << "===================================\n";
     loadFromFile();
     if (entries.empty())
     {
@@ -136,10 +145,131 @@ void PasswordEntryManager::searchPassword()
 
 void PasswordEntryManager::deletePassword()
 {
-    cout << "You selected: Delete A Password Entry.\n";
+    cout << "===========================\n";
+    cout << "  Delete A Password Entry  \n";
+    cout << "===========================\n";
+    loadFromFile();
+    if (entries.empty())
+    {
+        cout << "\nNo saved password found!\n";
+        return;
+    }
+
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    string keyword;
+    cout << "Enter name or website to delete: ";
+    getline(cin, keyword);
+
+    bool found = false;
+    vector<PasswordEntry> updatedEntries;
+
+    for (const auto &e : entries)
+    {
+        if (keyword == e.name || keyword == e.website)
+        {
+            found = true;
+            cout << "\nFound entry:\n";
+            cout << "Name: " << e.name
+                 << "\nWebsite: " << e.website
+                 << "\nPassword: " << e.password << "\n";
+
+            cout << "\nAre you sure you want to delete this entry? (y/n): ";
+            char confirm;
+            cin >> confirm;
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            if (confirm == 'y' || confirm == 'Y')
+            {
+                cout << "Entry deleted successfully!\n";
+                continue;
+            }
+            else
+            {
+                cout << "Deletion canceled. Entry kept.\n";
+            }
+        }
+
+        updatedEntries.push_back(e);
+    }
+
+    if (!found)
+    {
+        cout << "No matching entry found!\n";
+        return;
+    }
+
+    entries = updatedEntries;
+
+    saveToFile();
 }
 
 void PasswordEntryManager::updatePassword()
 {
-    cout << "You selected: Update/Edit Existing Password.\n";
+    cout << "=================================\n";
+    cout << "  Update/Edit Existing Password  \n";
+    cout << "=================================\n";
+    loadFromFile();
+    if (entries.empty())
+    {
+        cout << "\nNo saved password found!\n";
+        return;
+    }
+
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    string keyword;
+    cout << "Enter name or website to update: ";
+    getline(cin, keyword);
+    bool found = false;
+    for (auto &e : entries)
+    {
+        if (keyword == e.name || keyword == e.website)
+        {
+            found = true;
+            cout << "Found entry:\n"
+                 << "Name: " << e.name
+                 << "\nWebsite: " << e.website << "\n\n";
+            cout << "Press enter to skip updating a field.\n";
+
+            string newName, newWebsite, pass1, pass2;
+
+            cout << "Enter new name (Leave empty to keep same): ";
+            getline(cin, newName);
+            if (!newName.empty())
+                e.name = newName;
+
+            cout << "Enter new website (Leave empty to keep same): ";
+            getline(cin, newWebsite);
+            if (!newWebsite.empty())
+                e.website = newWebsite;
+
+            cout << "Enter new password (leave empty to keep same): ";
+            getline(cin, pass1);
+
+            if (!pass1.empty()) // only if user typed something
+            {
+                cout << "Confirm new password: ";
+                getline(cin, pass2);
+
+                if (pass1 == pass2)
+                {
+                    e.password = pass1;
+                    cout << "Password updated successfully!\n";
+                }
+                else
+                {
+                    cout << "Passwords didn't match! Keeping old password.\n";
+                }
+            }
+
+            cout << "\nEntry updated successfully!\n";
+            break;
+        }
+    }
+    if (!found)
+    {
+        cout << "No matching entry found!\n";
+        return;
+    }
+
+    saveToFile();
 }

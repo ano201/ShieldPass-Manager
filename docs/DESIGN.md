@@ -1,8 +1,8 @@
-# DESIGN
+# DESIGN.md
 
 ## Data Format
 
-Current storage format: **3-line per entry**
+Current storage format: 3 lines per entry
 
 ```
 name
@@ -11,13 +11,13 @@ password
 (blank line separator)
 ```
 
-File used: `data/vault.txt`
+File: `data/vault.txt`
+
+---
 
 ## Components
 
 ### 1️⃣ PasswordEntry (struct)
-
-Fields:
 
 - `name`
 - `website`
@@ -27,48 +27,58 @@ Fields:
 
 Responsibilities:
 
-- `loadFromFile()` – Read entries from text file
-- `saveToFile()` – Write all entries back to file
-- `addEntry()` – Add new password to list
+- `loadFromFile()` – Load entries from file
+- `saveToFile()` – Save all entries to file
+- `addEntry()` – Add new password with confirmation
 - `viewAll()` – Display all entries
-- `searchEntry()` – Find entry by name or website
+- `searchEntry()` – Search by name or website
+- `updateEntry()` – Update entry (blank input keeps old value)
+- `deleteEntry()` – Delete selected entry
 
 ### 3️⃣ main.cpp
 
 - Handles CLI menu
+- Clears screen before each menu
 - Collects user input
-- Calls manager functions
+- Calls PasswordEntryManager functions
+
+---
 
 ## Flow
 
-1. Program starts → `loadFromFile()`
-2. User selects menu option
-3. For Add → Save and write again using `saveToFile()`
-4. For View/Search → Always load latest data
+1. Start program → `loadFromFile()`
+2. Show menu
+3. User selects option
+   - Add → confirm password → save
+   - View → display entries
+   - Search → display matching entries
+   - Update → blank input keeps old value → save
+   - Delete → remove entry → save
+4. Exit
+
+---
 
 ## Menu Options (Current Phase)
 
 - Add Entry
 - View All Entries
 - Search Entry
+- Update Entry
+- Delete Entry
 - Exit
 
-## Future Enhancements (Planned)
+---
 
-### 🔒 Encryption Plan
+## Future Enhancements
 
-- Introduce **Master Password Prompt**
-- Use **KDF (Argon2)** for hashing master password
-- Encrypt vault using **AES-GCM / XChaCha20**
+- Master Password System
+- Encryption (AES-GCM / XChaCha20)
+- Backup / Import vault
 
-### 🧱 Encrypted Data Format
+---
 
-```
-MAGIC || salt || nonce || ciphertext
-```
+## Notes
 
-### 📌 Additional Planned Features
-
-- Delete entry
-- Update entry
-- Export / Import backup
+- Program clears the console at the start of each operation for clean UI.
+- Add/Update require password confirmation to prevent mistakes.
+- Update allows fields to remain unchanged if input is left blank.
