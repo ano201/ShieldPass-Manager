@@ -1,0 +1,16 @@
+# Build artifacts
+/build/
+*.o
+*.obj
+
+# Executable
+shieldPass
+
+# OS / IDE specific
+*.DS_Store
+*.vscode/
+*.idea/
+*.sublime-workspace
+
+# Data files (encrypted vault)
+data/
